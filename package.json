@@ -1,0 +1,20 @@
+{
+  "name": "av-cipher",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jugnu Agrawal",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^9.3.0"
+  },
+  "bin": {
+    "av-cipher": "index.js"
+  },
+  "devDependencies": {
+    "pkg": "^5.7.0"
+  }
+}
