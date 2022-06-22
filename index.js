@@ -6,7 +6,7 @@ const program = new Command();
 program
     .name('av-cipher')
     .description('CLI to Encrypt/Decrypt Data')
-    .version('1.0.0');
+    .version('1.0.1');
 
 program.command('encrypt')
     .description('Encrypts a File or a Text')
