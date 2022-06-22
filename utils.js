@@ -10,8 +10,10 @@ function encryptFile(filePath, key) {
             const digestHash = crypto.createHash('sha256').update(key).digest('hex');
             const allocatedKey = Buffer.alloc(32, digestHash);
             const iv = crypto.randomBytes(IV_LENGTH);
+            const parsedPath = path.parse(filePath);
+            const newFilePath = path.join(parsedPath.dir, parsedPath.name + '.encrypted' + parsedPath.ext);
             const rStream = fs.createReadStream(filePath);
-            const wStream = fs.createWriteStream(filePath + '.enc');
+            const wStream = fs.createWriteStream(newFilePath);
             const cipher = crypto.createCipheriv('aes-256-cbc', allocatedKey, iv);
             wStream.write(iv);
             rStream.pipe(cipher).pipe(wStream);
@@ -37,8 +39,10 @@ function decryptFile(filePath, key) {
             const digestHash = crypto.createHash('sha256').update(key).digest('hex');
             const allocatedKey = Buffer.alloc(32, digestHash);
             const iv = await getIvFromStream(filePath);
+            const parsedPath = path.parse(filePath);
+            const newFilePath = path.join(parsedPath.dir, parsedPath.name + '.decrypted' + parsedPath.ext);
             const rStream = fs.createReadStream(filePath, { start: IV_LENGTH });
-            const wStream = fs.createWriteStream(filePath + '.dec');
+            const wStream = fs.createWriteStream(newFilePath);
             const cipher = crypto.createDecipheriv('aes-256-cbc', allocatedKey, iv);
             rStream.pipe(cipher).pipe(wStream);
             wStream.on('close', () => {
